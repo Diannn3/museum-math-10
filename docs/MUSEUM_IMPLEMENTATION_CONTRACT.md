@@ -81,7 +81,7 @@ The current implementation contains exactly four exhibition entries.
 - subtitle: `An Interactive Audiovisual Experience`
 - artist: Aedrian Ponce
 - medium: interactive web artwork / sonification / code
-- museum preview asset: `/public/artworks/fibonacci-preview.svg`
+- museum preview asset: `/public/artworks/fibonacci-preview.svg` (light monochrome visualizer direction, 1600 × 1030)
 - configured live-work URL: `https://math-10-music.vercel.app`
 - source repository: `https://github.com/Diannn3/math-10-music`
 
@@ -166,7 +166,7 @@ The museum is a restrained editorial gallery:
 - no decorative gradients except restrained spatial lighting at entrance/closing;
 - artwork remains larger and louder than interface chrome.
 
-The interactive Fibonacci wall may use a dark room treatment to distinguish the digital installation from static works.
+The interactive Fibonacci wall uses the same light museum system as the static works so the gallery remains visually continuous with the current live artwork.
 
 ## 8. Motion contract
 
@@ -193,7 +193,7 @@ Blocking requirements:
 - skip link;
 - no audio autoplay;
 - new-tab links announce that they open a new tab;
-- dark installation focus rings remain visible;
+- focus rings remain visible on all light gallery surfaces;
 - touch/click targets should remain practically usable;
 - no horizontal overflow at narrow widths;
 - reduced-motion support;
@@ -482,3 +482,21 @@ Before every future implementation pass:
 - [ ] record only tests actually run;
 - [ ] record only screenshots actually inspected;
 - [ ] do not claim deployment success without deployment evidence.
+
+
+### PASS 011 — Light Fibonacci room + motion UX polish
+
+Implemented on `feature/light-fibonacci-motion-polish`:
+
+- moved Fibonacci from the dark installation treatment into the light museum system;
+- replaced the old colorful spiral preview with a light monochrome circular residue visualization based on the current supplied live-work direction;
+- added a dependency-free IntersectionObserver reveal system;
+- added staggered collection, work-label, About, entrance, and closing choreography;
+- refined collection hover feedback and artwork-frame interaction;
+- added subtle ambient entrance/closing motion;
+- preserved cross-document View Transitions;
+- preserved reduced-motion as a hard stop;
+- added Playwright coverage for the light Fibonacci treatment and reduced-motion reveal fallback;
+- added `docs/UX_MOTION_AUDIT_2026-09-22.md` documenting library research and implementation rationale.
+
+Do not add a motion library unless a future interaction requires timeline, gesture, or physics capabilities that the current native system cannot reasonably provide.
