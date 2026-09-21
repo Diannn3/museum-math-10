@@ -45,6 +45,7 @@ import "../styles/exhibition.css";
                 <p class="collection-card__number">{exhibit.number}</p>
                 <h2 style={`view-transition-name: title-${exhibit.slug}`}>{exhibit.title}</h2>
                 <p class="collection-card__subtitle">{exhibit.subtitle}</p>
+                <p class="collection-card__artist">By {exhibit.artist}</p>
                 <p class="collection-card__medium">{exhibit.medium}</p>
                 {exhibit.kind === "interactive" && (
                   <span class="collection-card__badge">Interactive work</span>

@@ -10,6 +10,25 @@ test("entrance leads into the four-work exhibition", async ({ page }) => {
   await expect(page.locator(".collection-card")).toHaveCount(4);
 });
 
+test("confirmed artist credits render on overview and work labels", async ({ page }) => {
+  await page.goto("/exhibition");
+  const cards = page.locator(".collection-card");
+  await expect(cards.nth(0)).toContainText("Dwayne Alilio");
+  await expect(cards.nth(1)).toContainText("Faith Leong");
+  await expect(cards.nth(2)).toContainText("Faith Leong");
+  await expect(cards.nth(3)).toContainText("Aedrian Ponce");
+
+  for (const [path, artist] of [
+    ["/work/desmos-flower", "Dwayne Alilio"],
+    ["/work/geometric-portrait", "Faith Leong"],
+    ["/work/perspective-study", "Faith Leong"],
+    ["/work/fibonacci-modulo-25", "Aedrian Ponce"]
+  ] as const) {
+    await page.goto(path);
+    await expect(page.locator(".work__facts")).toContainText(artist);
+  }
+});
+
 test("gallery arrow navigation follows the curated sequence", async ({ page }) => {
   await page.goto("/work/desmos-flower");
   await expect(page.getByRole("heading", { level: 1, name: "Desmos Flower" })).toBeVisible();
