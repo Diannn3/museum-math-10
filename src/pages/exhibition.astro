@@ -31,8 +31,8 @@ import "../styles/exhibition.css";
                 <img
                   src={exhibit.image}
                   alt={exhibit.alt}
-                  width="900"
-                  height="700"
+                  width={exhibit.imageWidth}
+                  height={exhibit.imageHeight}
                   loading={exhibit.number === "01" ? "eager" : "lazy"}
                   decoding="async"
                 />
