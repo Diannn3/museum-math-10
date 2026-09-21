@@ -82,9 +82,35 @@ const total = String(exhibits.length).padStart(2, "0");
         </dl>
 
         {exhibit.kind === "interactive" && (
-          <p class="work__interactive-note">
-            This piece continues beyond the museum as an interactive audiovisual work.
-          </p>
+          <section class="interactive-actions" aria-label="Interactive work actions">
+            <p class="work__interactive-note">
+              The museum view is a preview. Enter the live piece to hear the sonification
+              and watch the canonical Fibonacci modulo-25 events construct the visual.
+              Audio begins only after you press Play inside the work.
+            </p>
+            <div class="interactive-actions__links">
+              {exhibit.interactiveUrl && (
+                <a
+                  class="interactive-actions__primary"
+                  href={exhibit.interactiveUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Enter interactive work <span aria-hidden="true">↗</span>
+                </a>
+              )}
+              {exhibit.externalRepository && (
+                <a
+                  class="interactive-actions__secondary"
+                  href={exhibit.externalRepository}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  View source
+                </a>
+              )}
+            </div>
+          </section>
         )}
       </article>
 
