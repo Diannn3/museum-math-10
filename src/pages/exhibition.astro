@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import SiteHeader from "../components/SiteHeader.astro";
+import ExhibitionRail from "../components/ExhibitionRail.astro";
 import { exhibits } from "../data/exhibits";
 import "../styles/exhibition.css";
 ---
@@ -13,6 +14,7 @@ import "../styles/exhibition.css";
     <SiteHeader current="exhibition" />
 
     <main id="main-content" class="collection">
+      <div class="collection__rail"><ExhibitionRail /></div>
       <header class="collection__intro">
         <p class="eyebrow">Collection · {String(exhibits.length).padStart(2, "0")} works</p>
         <h1>The Exhibition</h1>
@@ -39,6 +41,7 @@ import "../styles/exhibition.css";
               </figure>
 
               <div class="collection-card__meta">
+                <span class="collection-card__enter" aria-hidden="true">Enter room ↗</span>
                 <p class="collection-card__number">{exhibit.number}</p>
                 <h2 style={`view-transition-name: title-${exhibit.slug}`}>{exhibit.title}</h2>
                 <p class="collection-card__subtitle">{exhibit.subtitle}</p>
