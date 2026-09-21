@@ -51,10 +51,8 @@ The current implementation contains exactly four exhibition entries.
 - intrinsic source size: **1194 × 1207**
 - supporting process asset: `/public/artworks/desmos-flower-process.jpg`
 - process source size: **719 × 996**
-- artist: **not yet confirmed**
-- current UI string: `Artist to be confirmed`
-
-Do not infer an artist name from signatures, filenames, image pixels, or unrelated class context.
+- artist: **Dwayne Alilio**
+- attribution confirmed by the user on 2026-09-22.
 
 ### 02 — Geometric Portrait
 
@@ -64,8 +62,7 @@ Do not infer an artist name from signatures, filenames, image pixels, or unrelat
 - medium: digital illustration
 - primary asset: `/public/artworks/geometric-portrait.jpg`
 - intrinsic source size: **2048 × 2518**
-- artist: **not yet confirmed**
-- current UI string: `Artist to be confirmed`
+- artist: **Faith Leong**
 
 ### 03 — Perspective Study
 
@@ -75,8 +72,7 @@ Do not infer an artist name from signatures, filenames, image pixels, or unrelat
 - medium: digital perspective drawing
 - primary asset: `/public/artworks/perspective-city.jpg`
 - intrinsic source size: **3166 × 2048**
-- artist: **not yet confirmed**
-- current UI string: `Artist to be confirmed`
+- artist: **Faith Leong**
 
 ### 04 — Fibonacci, Modulo 25
 
@@ -204,7 +200,7 @@ Blocking requirements:
 - disabled Previous state is not exposed as an actionable control;
 - artwork labels remain readable without relying on image text.
 
-Unknown artist names must be described as unknown rather than omitted in a way that implies authorship is known.
+Artist credits must follow the confirmed collection metadata; do not infer or alter attribution from image signatures or filenames.
 
 ## 10. Image handling
 
@@ -464,7 +460,7 @@ Before calling the museum release-ready:
 - [x] screenshot artifact is inspected;
 - [x] no obvious desktop/mobile visual defects remain in the inspected Chromium captures;
 - [ ] live Fibonacci URL is manually verified in a browser if possible;
-- [ ] unconfirmed artist names are replaced only when authoritative names are supplied;
+- [x] student artist names updated from the user-confirmed attribution (Dwayne Alilio; Faith Leong);
 - [x] full-resolution replacement screenshots are re-inspected on desktop and mobile after PASS 009 CI;
 - [ ] final main commit is known;
 - [ ] deployment is tested after main is green.
