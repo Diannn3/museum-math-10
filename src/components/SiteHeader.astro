@@ -1,0 +1,97 @@
+---
+interface Props {
+  current?: "home" | "exhibition" | "about";
+  tone?: "light" | "dark";
+}
+const { current, tone = "light" } = Astro.props;
+const linkClass = (item: Props["current"]) =>
+  current === item ? "site-header__link site-header__link--active" : "site-header__link";
+---
+
+<header class:list={["site-header", tone === "dark" && "site-header--dark"]}>
+  <a class="site-header__brand" href="/" aria-label="MATH × ART home">MATH <span aria-hidden="true">×</span> ART</a>
+  <nav class="site-header__nav" aria-label="Primary navigation">
+    <a class={linkClass("home")} href="/">Home</a>
+    <a class={linkClass("exhibition")} href="/exhibition">Exhibition</a>
+    <a class={linkClass("about")} href="/about">About</a>
+  </nav>
+</header>
+
+<style>
+  .site-header {
+    position: relative;
+    z-index: 20;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1.4rem var(--page-pad);
+    border-bottom: 1px solid var(--hairline);
+    background: color-mix(in srgb, var(--paper-bright) 92%, transparent);
+  }
+
+  .site-header__brand {
+    font-family: var(--serif);
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    letter-spacing: 0.035em;
+    text-decoration: none;
+  }
+
+  .site-header__nav {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.85rem, 2.4vw, 2rem);
+    font-size: 0.73rem;
+  }
+
+  .site-header__link {
+    position: relative;
+    padding-block: 0.3rem;
+    color: var(--muted);
+    text-decoration: none;
+  }
+
+  .site-header__link::after {
+    position: absolute;
+    right: 0;
+    bottom: -0.2rem;
+    left: 0;
+    height: 1px;
+    background: currentColor;
+    content: "";
+    opacity: 0;
+    transform: scaleX(0.35);
+    transition: opacity 180ms ease, transform 180ms ease;
+  }
+
+  .site-header__link:hover,
+  .site-header__link--active {
+    color: var(--ink);
+  }
+
+  .site-header__link:hover::after,
+  .site-header__link--active::after {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+
+  .site-header--dark {
+    --ink: #f7f5ef;
+    --muted: #aaa7a0;
+    --hairline: rgba(255,255,255,.16);
+    background: rgba(11, 11, 17, .92);
+    color: #f7f5ef;
+  }
+
+  @media (max-width: 480px) {
+    .site-header {
+      align-items: baseline;
+    }
+
+    .site-header__nav {
+      gap: .8rem;
+      font-size: .68rem;
+    }
+  }
+</style>
