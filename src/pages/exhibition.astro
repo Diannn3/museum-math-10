@@ -27,7 +27,7 @@ import "../styles/exhibition.css";
         {exhibits.map((exhibit) => (
           <li class="collection-card">
             <a class="collection-card__link" href={`/work/${exhibit.slug}`}>
-              <figure class="collection-card__figure">
+              <figure class="collection-card__figure" style={`view-transition-name: art-${exhibit.slug}`}>
                 <img
                   src={exhibit.image}
                   alt={exhibit.alt}
@@ -40,7 +40,7 @@ import "../styles/exhibition.css";
 
               <div class="collection-card__meta">
                 <p class="collection-card__number">{exhibit.number}</p>
-                <h2>{exhibit.title}</h2>
+                <h2 style={`view-transition-name: title-${exhibit.slug}`}>{exhibit.title}</h2>
                 <p class="collection-card__subtitle">{exhibit.subtitle}</p>
                 <p class="collection-card__medium">{exhibit.medium}</p>
                 {exhibit.kind === "interactive" && (

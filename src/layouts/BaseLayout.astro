@@ -4,11 +4,15 @@ import "../styles/global.css";
 interface Props {
   title?: string;
   description?: string;
+  themeColor?: string;
+  preloadImage?: string;
 }
 
 const {
   title = "MATH × ART — A Digital Exhibition",
-  description = "A digital exhibition exploring mathematical ideas through visual art, geometry, sound, and code."
+  description = "A digital exhibition exploring mathematical ideas through visual art, geometry, sound, and code.",
+  themeColor = "#f4f1ea",
+  preloadImage
 } = Astro.props;
 ---
 
@@ -18,7 +22,7 @@ const {
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <meta name="description" content={description} />
-    <meta name="theme-color" content="#f4f1ea" />
+    <meta name="theme-color" content={themeColor} />\n    {preloadImage && <link rel="prefetch" href={preloadImage} as="image" />}
     <meta name="color-scheme" content="light" />
     <title>{title}</title>
   </head>

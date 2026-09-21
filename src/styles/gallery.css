@@ -373,3 +373,9 @@
 .interactive-actions__secondary:hover {
   border-color: rgba(255,255,255,.55);
 }
+
+
+.work-shell--interactive a:focus-visible,
+.work-shell--interactive button:focus-visible {
+  outline-color: #f7f5ef;
+}
