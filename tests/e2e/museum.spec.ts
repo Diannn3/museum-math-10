@@ -47,7 +47,9 @@ test("all museum artwork images decode successfully", async ({ page }) => {
 
     const states = await images.evaluateAll(async (elements) =>
       Promise.all(
-        elements.map(async (image) => {
+        elements.map(async (node) => {
+          const image = node as HTMLImageElement;
+
           if (typeof image.decode === "function") {
             await image.decode().catch(() => undefined);
           }
