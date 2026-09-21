@@ -92,8 +92,19 @@ test("all museum artwork images decode successfully", async ({ page }) => {
       Promise.all(
         elements.map(async (node) => {
           const image = node as HTMLImageElement;
+          image.loading = "eager";
 
-          if (typeof image.decode === "function") {
+          if (!image.complete) {
+            await Promise.race([
+              new Promise<void>((resolve) => {
+                image.addEventListener("load", () => resolve(), { once: true });
+                image.addEventListener("error", () => resolve(), { once: true });
+              }),
+              new Promise<void>((resolve) => setTimeout(resolve, 5000))
+            ]);
+          }
+
+          if (image.complete && typeof image.decode === "function") {
             await image.decode().catch(() => undefined);
           }
 
@@ -159,6 +170,9 @@ test("static artwork sources preserve the supplied full-resolution dimensions", 
   }
 
   await page.goto("/work/desmos-flower");
+  await page.locator(".process__details").evaluate((node) => {
+    (node as HTMLDetailsElement).open = true;
+  });
   const processImage = page.locator(".process__figure img");
   await expect(processImage).toHaveAttribute("src", "/artworks/desmos-flower-process.jpg");
   const processDimensions = await processImage.evaluate(async (node) => {
