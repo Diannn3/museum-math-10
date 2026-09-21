@@ -50,6 +50,30 @@ test("final work exits into the closing room", async ({ page }) => {
   await expect(page.getByRole("heading", { level: 1, name: "Thank You" })).toBeVisible();
 });
 
+test("Fibonacci installation uses the light museum treatment and current preview", async ({ page }) => {
+  await page.goto("/work/fibonacci-modulo-25");
+
+  await expect(page.locator(".work-shell")).not.toHaveClass(/work-shell--interactive/);
+  await expect(page.locator(".site-header")).not.toHaveClass(/site-header--dark/);
+
+  const preview = page.locator(".work__frame img");
+  await expect(preview).toHaveAttribute("src", "/artworks/fibonacci-preview.svg");
+  await expect(preview).toHaveAttribute("width", "1600");
+  await expect(preview).toHaveAttribute("height", "1030");
+
+  const background = await page.locator(".work-shell").evaluate((node) =>
+    getComputedStyle(node).backgroundColor
+  );
+  expect(background).not.toBe("rgb(11, 11, 17)");
+});
+
+test("reduced motion keeps reveal content immediately visible", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/exhibition");
+  await expect(page.locator("html")).not.toHaveClass(/motion-ready/);
+  await expect(page.locator(".collection-card").first()).toBeVisible();
+});
+
 test("interactive work never autoplays audio inside the museum", async ({ page }) => {
   await page.goto("/work/fibonacci-modulo-25");
   const portal = page.getByRole("link", { name: /Enter interactive work/i });
