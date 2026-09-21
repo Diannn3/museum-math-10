@@ -53,6 +53,7 @@ test("final work exits into the closing room", async ({ page }) => {
 test("Fibonacci installation uses the light museum treatment and current preview", async ({ page }) => {
   await page.goto("/work/fibonacci-modulo-25");
 
+  await expect(page.locator(".work-shell")).toHaveClass(/work-shell--digital/);
   await expect(page.locator(".work-shell")).not.toHaveClass(/work-shell--interactive/);
   await expect(page.locator(".site-header")).not.toHaveClass(/site-header--dark/);
 
