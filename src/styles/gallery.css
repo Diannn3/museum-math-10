@@ -541,9 +541,10 @@
 @media (max-width: 1000px) {
   .work {
     min-height: auto;
+    grid-template-columns: 2.75rem minmax(0, 1fr) 2.75rem;
   }
 
-  .work__label { padding-left: 0; }
+  .work__label { min-width: 0; padding-left: 0; }
   .work__summary { max-width: 52ch; }
   .work__facts { max-width: 36rem; }
 }
@@ -554,6 +555,8 @@
   }
 
   .work {
+    width: 100%;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: 1.6rem 1rem;
   }
 
