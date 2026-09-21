@@ -419,7 +419,7 @@ This verifies the branch in Chromium automation. It does not claim physical Safa
 
 ### PASS 009 — Full-resolution artwork replacement
 
-Status: **IMPLEMENTED ON FEATURE BRANCH; CI VERIFICATION PENDING**.
+Status: **VERIFIED ON FEATURE BRANCH**.
 
 Implemented:
 
@@ -438,7 +438,22 @@ Expected source dimensions:
 - Geometric Portrait: `2048 × 2518`;
 - Perspective Study: `3166 × 2048`.
 
-Verification must be updated after the feature-branch GitHub Actions run and screenshot review.
+Verification evidence:
+
+- verified feature head before this documentation-only update: `65edeccf874423bc9fa82b1df890bf30bfbdfa0e`;
+- GitHub Actions run: `35636781664`;
+- `quality` job: **success**;
+- Astro check: **success**;
+- production build: **success**;
+- `browser` job: **success**;
+- Playwright browser QA: **success**;
+- the new resolution-regression test confirmed exact natural dimensions for the three static artworks and the Desmos process screenshot;
+- screenshot artifact `museum-visual-qa` (artifact id `10656641542`) was produced successfully;
+- desktop and mobile captures for the collection, Desmos Flower, Geometric Portrait, and Perspective Study were manually inspected;
+- the portrait and perspective work pages render the new sources cleanly at gallery scale on desktop and mobile;
+- no obvious crop, stretching, missing-image, or horizontal-overflow defect was observed in the inspected captures.
+
+The process screenshot remains limited to the 719 × 996 source supplied by the user. No artificial upscaling was applied.
 
 ## 15. Release blockers
 
@@ -450,7 +465,7 @@ Before calling the museum release-ready:
 - [x] no obvious desktop/mobile visual defects remain in the inspected Chromium captures;
 - [ ] live Fibonacci URL is manually verified in a browser if possible;
 - [ ] unconfirmed artist names are replaced only when authoritative names are supplied;
-- [ ] full-resolution replacement screenshots are re-inspected on desktop and mobile after PASS 009 CI;
+- [x] full-resolution replacement screenshots are re-inspected on desktop and mobile after PASS 009 CI;
 - [ ] final main commit is known;
 - [ ] deployment is tested after main is green.
 
