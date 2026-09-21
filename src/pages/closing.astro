@@ -1,0 +1,36 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import { exhibits } from "../data/exhibits";
+import "../styles/bookends.css";
+---
+
+<BaseLayout title="Thank You — MATH × ART" description="The end of the MATH × ART digital exhibition.">
+  <div class="closing-shell">
+    <SiteHeader current="exhibition" />
+    <main id="main-content" class="closing">
+      <div class="closing__ambient" aria-hidden="true">
+        <span class="closing__line closing__line--left"></span>
+        <span class="closing__line closing__line--right"></span>
+      </div>
+
+      <section class="closing__panel">
+        <p class="eyebrow">End of exhibition · {String(exhibits.length).padStart(2, "0")} works</p>
+        <h1>Thank You</h1>
+        <p class="closing__subtitle">for visiting</p>
+        <div class="rule" aria-hidden="true"></div>
+        <p class="closing__copy">
+          A small collection celebrating the connection between mathematics,
+          creativity, structure, and human expression.
+        </p>
+        <div class="closing__actions">
+          <a class="button button--dark" href="/exhibition">View the collection again</a>
+          <a class="closing__link" href="/">Return to entrance</a>
+        </div>
+      </section>
+
+      <p class="closing__aside closing__aside--left">Patterns are everywhere.</p>
+      <p class="closing__aside closing__aside--right">Look again. There may be mathematics in it.</p>
+    </main>
+  </div>
+</BaseLayout>

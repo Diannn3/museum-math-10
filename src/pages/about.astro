@@ -1,0 +1,57 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import SiteHeader from "../components/SiteHeader.astro";
+import { exhibits } from "../data/exhibits";
+import "../styles/bookends.css";
+---
+
+<BaseLayout title="About — MATH × ART" description="About the MATH × ART digital exhibition.">
+  <div class="about-shell">
+    <SiteHeader current="about" />
+    <main id="main-content" class="about-page">
+      <header class="about-page__hero">
+        <p class="eyebrow">About the exhibition</p>
+        <h1>Mathematics is not only calculated. It can be seen, drawn, heard, and built.</h1>
+      </header>
+
+      <section class="about-page__grid" aria-label="Exhibition context">
+        <div>
+          <h2>The idea</h2>
+          <p>
+            MATH × ART is a small digital exhibition for MATH 10 work. Instead of
+            imitating a three-dimensional museum, the site behaves like a quiet sequence
+            of gallery walls: one work receives attention at a time, with a concise label
+            and deliberate navigation.
+          </p>
+        </div>
+        <div>
+          <h2>The collection</h2>
+          <p>
+            The current collection contains {exhibits.length} works spanning mathematical
+            graphing, geometric illustration, perspective drawing, and an interactive
+            audiovisual sonification.
+          </p>
+        </div>
+        <div>
+          <h2>The labels</h2>
+          <p>
+            Titles and descriptive text are intentionally conservative. Where an artist
+            name has not yet been confirmed, the museum says so rather than guessing.
+          </p>
+        </div>
+        <div>
+          <h2>The interactive work</h2>
+          <p>
+            Fibonacci, Modulo 25 remains a separate live artwork. The museum presents a
+            preview and then hands control to the interactive piece, where sound starts
+            only after the visitor chooses to play it.
+          </p>
+        </div>
+      </section>
+
+      <div class="about-page__cta">
+        <a class="button button--dark" href="/exhibition">Explore the collection <span aria-hidden="true">→</span></a>
+      </div>
+    </main>
+  </div>
+</BaseLayout>
