@@ -23,6 +23,8 @@ const total = String(exhibits.length).padStart(2, "0");
 <BaseLayout
   title={`${exhibit.title} — MATH × ART`}
   description={exhibit.summary}
+  themeColor={exhibit.kind === "interactive" ? "#0b0b11" : "#f4f1ea"}
+  preloadImage={next?.image}
 >
   <div
     class:list={["work-shell", exhibit.kind === "interactive" && "work-shell--interactive"]}
@@ -38,6 +40,7 @@ const total = String(exhibits.length).padStart(2, "0");
             class="work-nav"
             rel="prev"
             data-nav="previous"
+            aria-keyshortcuts="ArrowLeft"
             aria-label={`Previous work: ${previous.title}`}
           >
             <span class="work-nav__arrow" aria-hidden="true">←</span>
@@ -106,7 +109,7 @@ const total = String(exhibits.length).padStart(2, "0");
                   target="_blank"
                   rel="noreferrer"
                 >
-                  View source
+                  View source<span class="sr-only"> (opens in a new tab)</span>
                 </a>
               )}
             </div>
@@ -121,6 +124,7 @@ const total = String(exhibits.length).padStart(2, "0");
             class="work-nav"
             rel="next"
             data-nav="next"
+            aria-keyshortcuts="ArrowRight"
             aria-label={`Next work: ${next.title}`}
           >
             <span class="work-nav__arrow" aria-hidden="true">→</span>
@@ -128,10 +132,11 @@ const total = String(exhibits.length).padStart(2, "0");
           </a>
         ) : (
           <a
-            href="/exhibition"
+            href="/closing"
             class="work-nav"
             data-nav="next"
-            aria-label="Return to exhibition overview"
+            aria-keyshortcuts="ArrowRight"
+            aria-label="Finish the exhibition"
           >
             <span class="work-nav__arrow" aria-hidden="true">↗</span>
             <span>Finish</span>
