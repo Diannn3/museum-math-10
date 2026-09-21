@@ -1,0 +1,32 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout>
+  <main id="main-content" class="entrance">
+    <div class="entrance__ambient" aria-hidden="true">
+      <div class="entrance__wall entrance__wall--left"></div>
+      <div class="entrance__wall entrance__wall--right"></div>
+      <div class="entrance__floor"></div>
+    </div>
+
+    <section class="entrance__panel" aria-labelledby="exhibition-title">
+      <p class="eyebrow">MATH 10 · Digital Exhibition</p>
+      <h1 id="exhibition-title">MATH <span aria-hidden="true">×</span> ART</h1>
+      <p class="entrance__subtitle">A Digital Exhibition</p>
+      <div class="rule" aria-hidden="true"></div>
+      <p class="entrance__lede">
+        Where mathematics meets creativity. A collection of works exploring patterns,
+        structure, perspective, form, sound, and code.
+      </p>
+      <a class="button button--dark" href="/exhibition">
+        Enter exhibition <span aria-hidden="true">→</span>
+      </a>
+    </section>
+
+    <footer class="entrance__footer">
+      <span>Use arrow keys inside the exhibition</span>
+      <span>2026</span>
+    </footer>
+  </main>
+</BaseLayout>
