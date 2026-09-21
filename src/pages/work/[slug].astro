@@ -52,7 +52,7 @@ const total = String(exhibits.length).padStart(2, "0");
       </div>
 
       <figure class="work__art">
-        <div class="work__frame">
+        <div class="work__frame" style={`view-transition-name: art-${exhibit.slug}`}>
           <img
             src={exhibit.image}
             alt={exhibit.alt}
@@ -64,7 +64,7 @@ const total = String(exhibits.length).padStart(2, "0");
 
       <article class="work__label" aria-labelledby="work-title">
         <p class="work__count">{exhibit.number} / {total}</p>
-        <h1 id="work-title">{exhibit.title}</h1>
+        <h1 id="work-title" style={`view-transition-name: title-${exhibit.slug}`}>{exhibit.title}</h1>
         <p class="work__subtitle">{exhibit.subtitle}</p>
         <div class="work__rule" aria-hidden="true"></div>
 
