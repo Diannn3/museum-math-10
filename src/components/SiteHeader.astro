@@ -11,9 +11,9 @@ const linkClass = (item: Props["current"]) =>
 <header class:list={["site-header", tone === "dark" && "site-header--dark"]}>
   <a class="site-header__brand" href="/" aria-label="MATH × ART home">MATH <span aria-hidden="true">×</span> ART</a>
   <nav class="site-header__nav" aria-label="Primary navigation">
-    <a class={linkClass("home")} href="/">Home</a>
-    <a class={linkClass("exhibition")} href="/exhibition">Exhibition</a>
-    <a class={linkClass("about")} href="/about">About</a>
+    <a class={linkClass("home")} href="/" aria-current={current === "home" ? "page" : undefined}>Home</a>
+    <a class={linkClass("exhibition")} href="/exhibition" aria-current={current === "exhibition" ? "page" : undefined}>Exhibition</a>
+    <a class={linkClass("about")} href="/about" aria-current={current === "about" ? "page" : undefined}>About</a>
   </nav>
 </header>
 
