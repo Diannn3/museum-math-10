@@ -59,6 +59,8 @@ const total = String(exhibits.length).padStart(2, "0");
           <img
             src={exhibit.image}
             alt={exhibit.alt}
+            width={exhibit.imageWidth}
+            height={exhibit.imageHeight}
             decoding="async"
             fetchpriority="high"
           />
@@ -157,7 +159,14 @@ const total = String(exhibits.length).padStart(2, "0");
           </p>
         </div>
         <figure class="process__figure">
-          <img src={exhibit.processImage} alt={exhibit.processAlt ?? ""} loading="lazy" decoding="async" />
+          <img
+            src={exhibit.processImage}
+            alt={exhibit.processAlt ?? ""}
+            width={exhibit.processWidth}
+            height={exhibit.processHeight}
+            loading="lazy"
+            decoding="async"
+          />
         </figure>
       </aside>
     )}
