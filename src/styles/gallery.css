@@ -3,15 +3,9 @@
   --work-ink: var(--ink);
   --work-muted: var(--muted);
   min-height: 100svh;
+  overflow-x: clip;
   background: var(--work-bg);
   color: var(--work-ink);
-}
-
-.work-shell--interactive {
-  --work-bg: #0b0b11;
-  --work-ink: #f7f5ef;
-  --work-muted: #a9a6a0;
-  --hairline: rgba(255,255,255,.16);
 }
 
 .work {
@@ -83,9 +77,23 @@
   box-shadow: 0 18px 60px rgba(27,24,20,.08);
 }
 
-.work-shell--interactive .work__frame {
-  background: #0b0b11;
-  box-shadow: 0 0 0 1px rgba(255,255,255,.07);
+
+.work-shell--digital .work__frame {
+  min-height: 0;
+  padding: 0;
+  background: #fbfbfa;
+  box-shadow: 0 1.5rem 4.5rem rgba(34,30,24,.08);
+}
+
+.work-shell--digital .work__frame::before {
+  border-color: rgba(21,21,21,.09);
+}
+
+.work-shell--digital .work__frame img {
+  width: 100%;
+  height: auto;
+  max-height: none;
+  box-shadow: none;
 }
 
 .work__frame img {
@@ -349,7 +357,7 @@
   justify-content: center;
   gap: .6rem;
   padding: .7rem .9rem;
-  border: 1px solid rgba(255,255,255,.25);
+  border: 1px solid var(--hairline);
   font-size: .65rem;
   font-weight: 650;
   letter-spacing: .1em;
@@ -357,29 +365,24 @@
   text-transform: uppercase;
 }
 
-.interactive-actions__primary {
-  background: #f7f5ef;
-  color: #0b0b11;
+ .interactive-actions__primary {
+  background: var(--ink);
+  color: var(--paper-bright);
 }
 
 .interactive-actions__secondary {
+  background: transparent;
   color: var(--work-ink);
 }
 
 .interactive-actions__primary:hover {
-  background: #ffffff;
+  background: #2b2b2b;
 }
 
 .interactive-actions__secondary:hover {
-  border-color: rgba(255,255,255,.55);
+  border-color: rgba(21,21,21,.48);
+  background: rgba(21,21,21,.035);
 }
-
-
-.work-shell--interactive a:focus-visible,
-.work-shell--interactive button:focus-visible {
-  outline-color: #f7f5ef;
-}
-
 
 /* PASS 010 — premium wall composition */
 .work-wayfinding {
@@ -557,9 +560,10 @@
 @media (max-width: 1000px) {
   .work {
     min-height: auto;
+    grid-template-columns: 2.75rem minmax(0, 1fr) 2.75rem;
   }
 
-  .work__label { padding-left: 0; }
+  .work__label { min-width: 0; padding-left: 0; }
   .work__summary { max-width: 52ch; }
   .work__facts { max-width: 36rem; }
 }
@@ -570,6 +574,8 @@
   }
 
   .work {
+    width: 100%;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: 1.6rem 1rem;
   }
 
@@ -603,7 +609,17 @@
   }
 
   .process__details > summary {
+    min-width: 0;
     min-height: 5.5rem;
+    gap: 1rem;
+  }
+
+  .process__details > summary > span:first-child {
+    min-width: 0;
+  }
+
+  .process__details summary strong {
+    overflow-wrap: anywhere;
   }
 
   .process__body {
@@ -614,4 +630,23 @@
 
 @media (prefers-reduced-motion: reduce) {
   .process__body { animation: none; }
+}
+
+/* Light installation treatment for the interactive work. */
+.work__art,
+.work__label {
+  transition: transform var(--motion-medium) var(--ease-expo);
+}
+
+.work__frame {
+  transition:
+    box-shadow var(--motion-medium) var(--ease-out),
+    transform var(--motion-medium) var(--ease-expo);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .work__art:hover .work__frame {
+    transform: translateY(-3px);
+    box-shadow: 0 3rem 7rem rgba(34,30,24,.14);
+  }
 }

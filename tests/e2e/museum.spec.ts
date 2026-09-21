@@ -50,6 +50,31 @@ test("final work exits into the closing room", async ({ page }) => {
   await expect(page.getByRole("heading", { level: 1, name: "Thank You" })).toBeVisible();
 });
 
+test("Fibonacci installation uses the light museum treatment and current preview", async ({ page }) => {
+  await page.goto("/work/fibonacci-modulo-25");
+
+  await expect(page.locator(".work-shell")).toHaveClass(/work-shell--digital/);
+  await expect(page.locator(".work-shell")).not.toHaveClass(/work-shell--interactive/);
+  await expect(page.locator(".site-header")).not.toHaveClass(/site-header--dark/);
+
+  const preview = page.locator(".work__frame img");
+  await expect(preview).toHaveAttribute("src", "/artworks/fibonacci-preview.svg");
+  await expect(preview).toHaveAttribute("width", "1600");
+  await expect(preview).toHaveAttribute("height", "1030");
+
+  const background = await page.locator(".work-shell").evaluate((node) =>
+    getComputedStyle(node).backgroundColor
+  );
+  expect(background).not.toBe("rgb(11, 11, 17)");
+});
+
+test("reduced motion keeps reveal content immediately visible", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "reduce" });
+  await page.goto("/exhibition");
+  await expect(page.locator("html")).not.toHaveClass(/motion-ready/);
+  await expect(page.locator(".collection-card").first()).toBeVisible();
+});
+
 test("interactive work never autoplays audio inside the museum", async ({ page }) => {
   await page.goto("/work/fibonacci-modulo-25");
   const portal = page.getByRole("link", { name: /Enter interactive work/i });
@@ -68,8 +93,19 @@ test("all museum artwork images decode successfully", async ({ page }) => {
       Promise.all(
         elements.map(async (node) => {
           const image = node as HTMLImageElement;
+          image.loading = "eager";
 
-          if (typeof image.decode === "function") {
+          if (!image.complete) {
+            await Promise.race([
+              new Promise<void>((resolve) => {
+                image.addEventListener("load", () => resolve(), { once: true });
+                image.addEventListener("error", () => resolve(), { once: true });
+              }),
+              new Promise<void>((resolve) => setTimeout(resolve, 5000))
+            ]);
+          }
+
+          if (image.complete && typeof image.decode === "function") {
             await image.decode().catch(() => undefined);
           }
 
@@ -135,6 +171,9 @@ test("static artwork sources preserve the supplied full-resolution dimensions", 
   }
 
   await page.goto("/work/desmos-flower");
+  await page.locator(".process__details").evaluate((node) => {
+    (node as HTMLDetailsElement).open = true;
+  });
   const processImage = page.locator(".process__figure img");
   await expect(processImage).toHaveAttribute("src", "/artworks/desmos-flower-process.jpg");
   const processDimensions = await processImage.evaluate(async (node) => {

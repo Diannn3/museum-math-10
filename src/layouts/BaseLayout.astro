@@ -26,9 +26,40 @@ const {
     {preloadImage && <link rel="prefetch" href={preloadImage} as="image" />}
     <meta name="color-scheme" content="light" />
     <title>{title}</title>
+    <script is:inline>
+      if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+        document.documentElement.classList.add("motion-ready");
+      }
+    </script>
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to content</a>
     <slot />
+    <script is:inline>
+      (() => {
+        if (!document.documentElement.classList.contains("motion-ready")) return;
+        const targets = [...document.querySelectorAll("[data-reveal]")];
+        if (!targets.length) return;
+
+        const reveal = (element) => element.classList.add("is-visible");
+        if (!("IntersectionObserver" in window)) {
+          targets.forEach(reveal);
+          return;
+        }
+
+        const observer = new IntersectionObserver((entries) => {
+          for (const entry of entries) {
+            if (!entry.isIntersecting) continue;
+            reveal(entry.target);
+            observer.unobserve(entry.target);
+          }
+        }, { rootMargin: "0px 0px -7% 0px", threshold: 0.08 });
+
+        targets.forEach((target, index) => {
+          target.style.setProperty("--reveal-index", String(index % 6));
+          observer.observe(target);
+        });
+      })();
+    </script>
   </body>
 </html>

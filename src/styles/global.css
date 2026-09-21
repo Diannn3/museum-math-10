@@ -17,6 +17,7 @@
   --motion-fast: 180ms;
   --motion-medium: 360ms;
   --motion-slow: 700ms;
+  --motion-cinematic: 960ms;
   --ease-out: cubic-bezier(.22, .61, .36, 1);
   --ease-expo: cubic-bezier(.16, 1, .3, 1);
   font-family: var(--sans);
@@ -148,6 +149,7 @@ button:focus-visible {
   bottom: 17%;
   width: min(23vw, 20rem);
   background: linear-gradient(90deg, rgba(217,211,201,.92), rgba(245,241,234,.08));
+  animation: entrance-breathe 9s ease-in-out infinite alternate;
 }
 
 .entrance__wall--left {
@@ -173,6 +175,7 @@ button:focus-visible {
     repeating-linear-gradient(90deg, rgba(65,56,45,.08) 0 1px, transparent 1px 7rem),
     linear-gradient(rgba(235,229,219,.1), rgba(184,173,158,.42));
   border-top: 1px solid rgba(31,27,22,.08);
+  animation: entrance-floor 12s ease-in-out infinite alternate;
 }
 
 .entrance__panel {
@@ -221,6 +224,16 @@ button:focus-visible {
   text-transform: uppercase;
 }
 
+@keyframes entrance-breathe {
+  from { opacity: .72; }
+  to { opacity: 1; }
+}
+
+@keyframes entrance-floor {
+  from { opacity: .68; }
+  to { opacity: .9; }
+}
+
 @media (max-width: 640px) {
   .entrance__wall { width: 14vw; }
   .entrance__panel { padding-inline: 0.5rem; }
@@ -228,6 +241,50 @@ button:focus-visible {
   .entrance__footer { justify-content: flex-end; }
 }
 
+
+
+/* Progressive motion system: no runtime animation dependency. */
+.motion-ready [data-reveal] {
+  opacity: 0;
+  transform: translateY(1.15rem);
+  transition:
+    opacity var(--motion-slow) var(--ease-out),
+    transform var(--motion-cinematic) var(--ease-expo);
+  transition-delay: calc(var(--reveal-index, 0) * 45ms);
+}
+
+.motion-ready [data-reveal="header"] {
+  transform: translateY(-.65rem);
+}
+
+.motion-ready [data-reveal="art"] {
+  transform: translateY(.8rem) scale(.992);
+}
+
+.motion-ready [data-reveal="label"] {
+  transform: translateY(1rem);
+}
+
+.motion-ready [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .button {
+    transition:
+      transform var(--motion-fast) var(--ease-expo),
+      box-shadow var(--motion-fast) var(--ease-out),
+      background-color var(--motion-fast) ease,
+      color var(--motion-fast) ease,
+      border-color var(--motion-fast) ease;
+  }
+
+  .button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 .7rem 1.8rem rgba(21,21,21,.12);
+  }
+}
 
 
 /* Progressive enhancement: browsers with cross-document View Transitions
@@ -265,6 +322,12 @@ button:focus-visible {
     transition-duration: 0.01ms !important;
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
+  }
+
+  .motion-ready [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
   }
 
   ::view-transition-group(*),

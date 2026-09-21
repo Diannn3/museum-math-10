@@ -77,9 +77,9 @@ export const exhibits: Exhibit[] = [
     medium: "Interactive web artwork · sonification · code",
     summary: "An audiovisual study of the Fibonacci sequence modulo 25. Each canonical residue is placed around a circular visual field and mapped to one of 25 ascending pitches. The pitch mapping and sound design are artistic choices; the Fibonacci residue sequence is the mathematical source.",
     image: "/artworks/fibonacci-preview.svg",
-    imageWidth: 1200,
-    imageHeight: 900,
-    alt: "A dark circular mathematical visualization with repeated colored points and connecting paths, representing a preview of the interactive Fibonacci modulo 25 work.",
+    imageWidth: 1600,
+    imageHeight: 1030,
+    alt: "A light monochrome Fibonacci modulo 25 visualizer with 25 points around a circle, connecting paths, an active black point, and playback status.",
     kind: "interactive",
     interactiveUrl: "https://math-10-music.vercel.app",
     externalRepository: "https://github.com/Diannn3/math-10-music"

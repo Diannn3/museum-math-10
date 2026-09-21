@@ -15,7 +15,7 @@ import "../styles/exhibition.css";
 
     <main id="main-content" class="collection">
       <div class="collection__rail"><ExhibitionRail /></div>
-      <header class="collection__intro">
+      <header class="collection__intro" data-reveal="section">
         <p class="eyebrow">Collection · {String(exhibits.length).padStart(2, "0")} works</p>
         <h1>The Exhibition</h1>
         <p>
@@ -27,7 +27,7 @@ import "../styles/exhibition.css";
 
       <ol class="collection-grid" aria-label="Exhibition works">
         {exhibits.map((exhibit) => (
-          <li class="collection-card">
+          <li class="collection-card" data-reveal="card">
             <a class="collection-card__link" href={`/work/${exhibit.slug}`}>
               <figure class="collection-card__figure" style={`view-transition-name: art-${exhibit.slug}`}>
                 <img
