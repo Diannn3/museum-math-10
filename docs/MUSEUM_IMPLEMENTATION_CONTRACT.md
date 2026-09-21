@@ -1,7 +1,7 @@
 # MATH × ART Digital Exhibition — Implementation Contract and Pass Ledger
 
 **Repository:** `Diannn3/museum-math-10`  
-**Canonical working date:** 2026-09-21  
+**Canonical working date:** 2026-09-22  
 **Status:** Binding implementation context for this repository.
 
 ## 1. Purpose
@@ -47,8 +47,10 @@ The current implementation contains exactly four exhibition entries.
 - title: `Desmos Flower`
 - subtitle: `Mathematics in Nature`
 - medium: Desmos / mathematical graphing
-- primary asset: `/public/artworks/desmos-flower.webp`
-- supporting process asset: `/public/artworks/desmos-flower-process.webp`
+- primary asset: `/public/artworks/desmos-flower.jpg`
+- intrinsic source size: **1194 × 1207**
+- supporting process asset: `/public/artworks/desmos-flower-process.jpg`
+- process source size: **719 × 996**
 - artist: **not yet confirmed**
 - current UI string: `Artist to be confirmed`
 
@@ -60,7 +62,8 @@ Do not infer an artist name from signatures, filenames, image pixels, or unrelat
 - title: `Geometric Portrait`
 - subtitle: `Form, Light, and Structure`
 - medium: digital illustration
-- primary asset: `/public/artworks/geometric-portrait.webp`
+- primary asset: `/public/artworks/geometric-portrait.jpg`
+- intrinsic source size: **2048 × 2518**
 - artist: **not yet confirmed**
 - current UI string: `Artist to be confirmed`
 
@@ -70,7 +73,8 @@ Do not infer an artist name from signatures, filenames, image pixels, or unrelat
 - title: `Perspective Study`
 - subtitle: `Space and Geometry`
 - medium: digital perspective drawing
-- primary asset: `/public/artworks/perspective-city.webp`
+- primary asset: `/public/artworks/perspective-city.jpg`
+- intrinsic source size: **3166 × 2048**
 - artist: **not yet confirmed**
 - current UI string: `Artist to be confirmed`
 
@@ -204,18 +208,27 @@ Unknown artist names must be described as unknown rather than omitted in a way t
 
 ## 10. Image handling
 
-Current supplied images were converted to repository-friendly WebP derivatives for the museum.
+The three static artworks and the Desmos process screenshot now use the full pixel dimensions of the newer user-supplied JPEG sources. The site does **not** upscale them or invent detail.
+
+Current intrinsic dimensions:
+
+- Desmos Flower: **1194 × 1207**
+- Desmos process screenshot: **719 × 996**
+- Geometric Portrait: **2048 × 2518**
+- Perspective Study: **3166 × 2048**
 
 Rules:
 
 - preserve the artwork's aspect ratio;
 - use `object-fit: contain`, not destructive cropping;
-- do not recolor or stylize student work;
+- keep each image at its supplied intrinsic pixel dimensions;
+- do not recolor, sharpen with generative detail, or otherwise stylize student work;
 - do not add fake frames into the source image itself;
 - decorative museum framing belongs in CSS;
-- if a derivative looks soft during screenshot review, regenerate it from the original supplied image rather than sharpening or inventing detail.
+- record intrinsic width/height in `src/data/exhibits.ts` and emit those dimensions on the HTML `img` elements;
+- if a source is still insufficient for the desired display size, request a higher-resolution original instead of upscaling.
 
-The perspective artwork may need a higher-resolution derivative if large-display QA reveals softness.
+The Desmos process screenshot is source-limited to 719 × 996. That is now the exact supplied resolution; a sharper process view would require a larger original screenshot.
 
 ## 11. Performance contract
 
@@ -404,6 +417,44 @@ Verification evidence:
 
 This verifies the branch in Chromium automation. It does not claim physical Safari/iOS certification or external deployment availability.
 
+### PASS 009 — Full-resolution artwork replacement
+
+Status: **VERIFIED ON FEATURE BRANCH**.
+
+Implemented:
+
+- replaced the low-resolution static artwork derivatives with the newer supplied full-resolution JPEG sources;
+- preserved the exact supplied pixel dimensions rather than upscaling;
+- recorded intrinsic width/height in the exhibit data model;
+- emitted intrinsic dimensions in both collection and gallery image markup;
+- replaced the Desmos process screenshot with the newer supplied source;
+- removed the superseded low-resolution WebP files;
+- added Playwright assertions that lock the expected natural pixel dimensions so a future low-resolution regression fails CI.
+
+Expected source dimensions:
+
+- Desmos Flower: `1194 × 1207`;
+- Desmos process screenshot: `719 × 996`;
+- Geometric Portrait: `2048 × 2518`;
+- Perspective Study: `3166 × 2048`.
+
+Verification evidence:
+
+- verified feature head before this documentation-only update: `65edeccf874423bc9fa82b1df890bf30bfbdfa0e`;
+- GitHub Actions run: `35636781664`;
+- `quality` job: **success**;
+- Astro check: **success**;
+- production build: **success**;
+- `browser` job: **success**;
+- Playwright browser QA: **success**;
+- the new resolution-regression test confirmed exact natural dimensions for the three static artworks and the Desmos process screenshot;
+- screenshot artifact `museum-visual-qa` (artifact id `10656641542`) was produced successfully;
+- desktop and mobile captures for the collection, Desmos Flower, Geometric Portrait, and Perspective Study were manually inspected;
+- the portrait and perspective work pages render the new sources cleanly at gallery scale on desktop and mobile;
+- no obvious crop, stretching, missing-image, or horizontal-overflow defect was observed in the inspected captures.
+
+The process screenshot remains limited to the 719 × 996 source supplied by the user. No artificial upscaling was applied.
+
 ## 15. Release blockers
 
 Before calling the museum release-ready:
@@ -414,7 +465,7 @@ Before calling the museum release-ready:
 - [x] no obvious desktop/mobile visual defects remain in the inspected Chromium captures;
 - [ ] live Fibonacci URL is manually verified in a browser if possible;
 - [ ] unconfirmed artist names are replaced only when authoritative names are supplied;
-- [x] perspective artwork sharpness is visually checked at large desktop size and is acceptable for the current derivative;
+- [x] full-resolution replacement screenshots are re-inspected on desktop and mobile after PASS 009 CI;
 - [ ] final main commit is known;
 - [ ] deployment is tested after main is green.
 

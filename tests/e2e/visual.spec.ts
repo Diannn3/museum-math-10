@@ -5,6 +5,8 @@ const routes = [
   ["entrance", "/"],
   ["exhibition", "/exhibition"],
   ["flower", "/work/desmos-flower"],
+  ["portrait", "/work/geometric-portrait"],
+  ["perspective", "/work/perspective-study"],
   ["fibonacci", "/work/fibonacci-modulo-25"],
   ["closing", "/closing"]
 ] as const;
