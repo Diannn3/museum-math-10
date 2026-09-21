@@ -149,6 +149,7 @@ button:focus-visible {
   bottom: 17%;
   width: min(23vw, 20rem);
   background: linear-gradient(90deg, rgba(217,211,201,.92), rgba(245,241,234,.08));
+  animation: entrance-breathe 9s ease-in-out infinite alternate;
 }
 
 .entrance__wall--left {
@@ -174,6 +175,7 @@ button:focus-visible {
     repeating-linear-gradient(90deg, rgba(65,56,45,.08) 0 1px, transparent 1px 7rem),
     linear-gradient(rgba(235,229,219,.1), rgba(184,173,158,.42));
   border-top: 1px solid rgba(31,27,22,.08);
+  animation: entrance-floor 12s ease-in-out infinite alternate;
 }
 
 .entrance__panel {
@@ -220,6 +222,16 @@ button:focus-visible {
   font-size: 0.68rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
+}
+
+@keyframes entrance-breathe {
+  from { opacity: .72; }
+  to { opacity: 1; }
+}
+
+@keyframes entrance-floor {
+  from { opacity: .68; }
+  to { opacity: .9; }
 }
 
 @media (max-width: 640px) {
