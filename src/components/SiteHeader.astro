@@ -8,7 +8,7 @@ const linkClass = (item: Props["current"]) =>
   current === item ? "site-header__link site-header__link--active" : "site-header__link";
 ---
 
-<header class:list={["site-header", tone === "dark" && "site-header--dark"]}>
+<header class:list={["site-header", tone === "dark" && "site-header--dark"]} data-reveal="header">
   <a class="site-header__brand" href="/" aria-label="MATH × ART home">MATH <span aria-hidden="true">×</span> ART</a>
   <nav class="site-header__nav" aria-label="Primary navigation">
     <a class={linkClass("home")} href="/" aria-current={current === "home" ? "page" : undefined}>Home</a>
@@ -28,7 +28,9 @@ const linkClass = (item: Props["current"]) =>
     gap: 1rem;
     padding: 1.4rem var(--page-pad);
     border-bottom: 1px solid var(--hairline);
-    background: color-mix(in srgb, var(--paper-bright) 92%, transparent);
+    background: color-mix(in srgb, var(--paper-bright) 86%, transparent);
+    backdrop-filter: blur(18px) saturate(1.15);
+    -webkit-backdrop-filter: blur(18px) saturate(1.15);
   }
 
   .site-header__brand {
