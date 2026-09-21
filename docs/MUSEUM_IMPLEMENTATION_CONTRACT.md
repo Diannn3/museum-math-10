@@ -376,28 +376,45 @@ Merged main commit:
 
 ### PASS 008 — Quality gates
 
-Status at creation of this document: **IN PROGRESS** on `feature/08-quality-gates`.
+Status: **VERIFIED ON FEATURE BRANCH**.
 
-Implemented on the feature branch:
+Implemented:
 
 - Playwright browser suite;
 - responsive overflow tests;
-- deterministic visual screenshot capture;
-- GitHub Actions quality workflow.
+- explicit artwork image-decode assertions;
+- deterministic visual screenshot capture that waits for image decoding;
+- escaped-newline regression coverage for document chrome;
+- GitHub Actions quality workflow;
+- Node typings required by the browser QA suite.
 
-The pass is not complete until CI evidence exists.
+Verification evidence:
+
+- feature head verified: `10f246b70d35dccb6b0a7ea4583b9a2a3e37e617`;
+- GitHub Actions run: `35619252615`;
+- `quality` job: **success**;
+- `astro check`: **success**;
+- production build: **success**;
+- `browser` job: **success**;
+- Playwright browser QA: **success**;
+- screenshot artifact `museum-visual-qa`: produced successfully;
+- latest desktop and mobile screenshot outputs were manually inspected after the green run;
+- the Desmos Flower, portrait, perspective study, and Fibonacci preview are visibly rendered in the inspected exhibition capture;
+- no obvious horizontal-overflow or major layout defect was observed in the inspected desktop/mobile captures.
+
+This verifies the branch in Chromium automation. It does not claim physical Safari/iOS certification or external deployment availability.
 
 ## 15. Release blockers
 
 Before calling the museum release-ready:
 
-- [ ] quality workflow passes;
-- [ ] browser workflow passes;
-- [ ] screenshot artifact is inspected;
-- [ ] no obvious desktop/mobile visual defects remain;
+- [x] quality workflow passes on the feature branch;
+- [x] browser workflow passes on the feature branch;
+- [x] screenshot artifact is inspected;
+- [x] no obvious desktop/mobile visual defects remain in the inspected Chromium captures;
 - [ ] live Fibonacci URL is manually verified in a browser if possible;
 - [ ] unconfirmed artist names are replaced only when authoritative names are supplied;
-- [ ] perspective artwork sharpness is visually checked at large desktop size;
+- [x] perspective artwork sharpness is visually checked at large desktop size and is acceptable for the current derivative;
 - [ ] final main commit is known;
 - [ ] deployment is tested after main is green.
 
