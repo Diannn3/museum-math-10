@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" role="img" aria-labelledby="title desc">
+<title id="title">Fibonacci modulo 25 preview</title>
+<desc id="desc">A dark circular field with a spiral-like sequence of pink and blue points and quiet connecting lines.</desc>
+<rect width="1200" height="900" fill="#0b0b11"/>
+<circle cx="600" cy="450" r="318" fill="none" stroke="#343442" stroke-width="2"/>
+<circle cx="600" cy="450" r="255" fill="none" stroke="#242431" stroke-width="1.5"/>
+<circle cx="600" cy="450" r="190" fill="none" stroke="#1d1d29"/>
+<path d="M600 132 C806 184 901 357 825 518 C742 694 483 725 345 572 C227 441 287 239 455 183 C614 130 781 241 786 394 C790 532 648 619 527 556 C422 501 427 362 520 318 C597 281 681 331 683 407 C685 471 621 510 566 484 C520 463 519 407 557 387" fill="none" stroke="#57405e" stroke-width="2" opacity=".42"/>
+<g>
+<circle cx="600" cy="132" r="11" fill="#ff5c83"/><circle cx="678" cy="143" r="9" fill="#f5588f"/><circle cx="756" cy="175" r="10" fill="#ef529a"/><circle cx="822" cy="225" r="11" fill="#e54aa5"/><circle cx="870" cy="289" r="10" fill="#d947b2"/><circle cx="897" cy="365" r="12" fill="#ca46c0"/><circle cx="899" cy="443" r="10" fill="#b849ce"/><circle cx="881" cy="520" r="11" fill="#a34edb"/><circle cx="838" cy="589" r="9" fill="#8e56e6"/><circle cx="778" cy="649" r="11" fill="#775ff0"/><circle cx="708" cy="690" r="10" fill="#6569f7"/><circle cx="628" cy="708" r="12" fill="#5774fb"/><circle cx="550" cy="702" r="10" fill="#4d80fb"/><circle cx="473" cy="675" r="11" fill="#4a8bf6"/><circle cx="410" cy="626" r="10" fill="#4c95ed"/><circle cx="360" cy="565" r="12" fill="#579de2"/><circle cx="326" cy="491" r="10" fill="#69a4d5"/><circle cx="308" cy="413" r="11" fill="#7eabc6"/><circle cx="317" cy="337" r="10" fill="#94b0b6"/><circle cx="344" cy="268" r="11" fill="#acb4a6"/><circle cx="393" cy="211" r="10" fill="#c4b696"/><circle cx="454" cy="165" r="11" fill="#dbab8b"/><circle cx="521" cy="139" r="9" fill="#ec8e83"/>
+</g>
+<g opacity=".72">
+<circle cx="600" cy="246" r="8" fill="#ff5c83"/><circle cx="685" cy="267" r="8" fill="#e950a0"/><circle cx="744" cy="327" r="8" fill="#c94bc2"/><circle cx="760" cy="413" r="8" fill="#9f53dd"/><circle cx="728" cy="492" r="8" fill="#7564f2"/><circle cx="661" cy="544" r="8" fill="#547afa"/><circle cx="578" cy="555" r="8" fill="#4b8ef3"/><circle cx="502" cy="523" r="8" fill="#62a0dd"/><circle cx="454" cy="455" r="8" fill="#86afc0"/><circle cx="451" cy="375" r="8" fill="#b1b4a2"/><circle cx="491" cy="310" r="8" fill="#d6aa8e"/><circle cx="552" cy="270" r="8" fill="#ef7d86"/>
+</g>
+<circle cx="600" cy="450" r="13" fill="#fafafa"/>
+</svg>
