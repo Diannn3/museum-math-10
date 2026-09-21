@@ -3,6 +3,7 @@
   --work-ink: var(--ink);
   --work-muted: var(--muted);
   min-height: 100svh;
+  overflow-x: clip;
   background: var(--work-bg);
   color: var(--work-ink);
 }
@@ -586,7 +587,17 @@
   }
 
   .process__details > summary {
+    min-width: 0;
     min-height: 5.5rem;
+    gap: 1rem;
+  }
+
+  .process__details > summary > span:first-child {
+    min-width: 0;
+  }
+
+  .process__details summary strong {
+    overflow-wrap: anywhere;
   }
 
   .process__body {
