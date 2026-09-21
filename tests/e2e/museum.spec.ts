@@ -39,6 +39,37 @@ test("interactive work never autoplays audio inside the museum", async ({ page }
   await expect(page.locator("audio, video")).toHaveCount(0);
 });
 
+test("all museum artwork images decode successfully", async ({ page }) => {
+  for (const path of ["/exhibition", "/work/desmos-flower", "/work/geometric-portrait", "/work/perspective-study", "/work/fibonacci-modulo-25"]) {
+    await page.goto(path);
+    const images = page.locator("img");
+    await expect(images.first()).toBeVisible();
+
+    const states = await images.evaluateAll(async (elements) =>
+      Promise.all(
+        elements.map(async (image) => {
+          if (typeof image.decode === "function") {
+            await image.decode().catch(() => undefined);
+          }
+
+          return {
+            src: image.getAttribute("src"),
+            complete: image.complete,
+            naturalWidth: image.naturalWidth,
+            naturalHeight: image.naturalHeight
+          };
+        })
+      )
+    );
+
+    for (const state of states) {
+      expect(state.complete, `${path}: ${state.src} did not finish loading`).toBe(true);
+      expect(state.naturalWidth, `${path}: ${state.src} has no decoded width`).toBeGreaterThan(0);
+      expect(state.naturalHeight, `${path}: ${state.src} has no decoded height`).toBeGreaterThan(0);
+    }
+  }
+});
+
 test("document chrome contains no escaped newline artifacts", async ({ page }) => {
   for (const path of ["/", "/exhibition", "/work/desmos-flower", "/work/fibonacci-modulo-25", "/about", "/closing"]) {
     await page.goto(path);
