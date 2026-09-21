@@ -23,7 +23,9 @@ for (const viewport of [
       await expect(page.locator("body")).toBeVisible();
       await page.locator("img").evaluateAll(async (images) => {
         await Promise.all(
-          images.map(async (image) => {
+          images.map(async (node) => {
+            const image = node as HTMLImageElement;
+
             if (!image.complete) {
               await new Promise<void>((resolve) => {
                 image.addEventListener("load", () => resolve(), { once: true });
