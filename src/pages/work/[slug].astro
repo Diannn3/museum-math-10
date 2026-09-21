@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import SiteHeader from "../../components/SiteHeader.astro";
+import ExhibitionRail from "../../components/ExhibitionRail.astro";
 import { exhibits, getExhibitNeighbors, type Exhibit } from "../../data/exhibits";
 import "../../styles/gallery.css";
 
@@ -31,6 +32,10 @@ const total = String(exhibits.length).padStart(2, "0");
     data-work
   >
     <SiteHeader current="exhibition" tone={exhibit.kind === "interactive" ? "dark" : "light"} />
+
+    <div class="work-wayfinding">
+      <ExhibitionRail currentSlug={exhibit.slug} tone={exhibit.kind === "interactive" ? "dark" : "light"} />
+    </div>
 
     <main id="main-content" class="work">
       <div class="work__navigation work__navigation--previous">
@@ -149,25 +154,35 @@ const total = String(exhibits.length).padStart(2, "0");
 
     {exhibit.processImage && (
       <aside class="process" aria-labelledby="process-title">
-        <div class="process__copy">
-          <p class="eyebrow">Behind the work</p>
-          <h2 id="process-title">The construction is part of the artwork.</h2>
-          <p>
-            The graphing view exposes a portion of the mathematical process used to
-            build the final flower. It is shown as supporting material rather than as
-            a second exhibit.
-          </p>
-        </div>
-        <figure class="process__figure">
-          <img
-            src={exhibit.processImage}
-            alt={exhibit.processAlt ?? ""}
-            width={exhibit.processWidth}
-            height={exhibit.processHeight}
-            loading="lazy"
-            decoding="async"
-          />
-        </figure>
+        <details class="process__details">
+          <summary>
+            <span>
+              <span class="eyebrow">Behind the work</span>
+              <strong id="process-title">See the construction</strong>
+            </span>
+            <span class="process__toggle" aria-hidden="true">+</span>
+          </summary>
+          <div class="process__body">
+            <div class="process__copy">
+              <h2>The construction is part of the artwork.</h2>
+              <p>
+                The graphing view exposes a portion of the mathematical process used to
+                build the final flower. It is shown as supporting material rather than as
+                a second exhibit.
+              </p>
+            </div>
+            <figure class="process__figure">
+              <img
+                src={exhibit.processImage}
+                alt={exhibit.processAlt ?? ""}
+                width={exhibit.processWidth}
+                height={exhibit.processHeight}
+                loading="lazy"
+                decoding="async"
+              />
+            </figure>
+          </div>
+        </details>
       </aside>
     )}
 

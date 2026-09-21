@@ -1,0 +1,151 @@
+---
+import { exhibits } from "../data/exhibits";
+
+interface Props {
+  currentSlug?: string;
+  tone?: "light" | "dark";
+  compact?: boolean;
+}
+
+const { currentSlug, tone = "light", compact = false } = Astro.props;
+const currentIndex = currentSlug ? exhibits.findIndex((item) => item.slug === currentSlug) : -1;
+---
+
+<nav
+  class:list={["exhibition-rail", tone === "dark" && "exhibition-rail--dark", compact && "exhibition-rail--compact"]}
+  aria-label="Exhibition rooms"
+>
+  <a class="exhibition-rail__bookend" href="/" aria-label="Entrance">Entrance</a>
+  <span class="exhibition-rail__line" aria-hidden="true"></span>
+  <ol>
+    {exhibits.map((exhibit, index) => (
+      <li>
+        <a
+          href={`/work/${exhibit.slug}`}
+          class:list={["exhibition-rail__room", exhibit.slug === currentSlug && "is-current"]}
+          aria-current={exhibit.slug === currentSlug ? "step" : undefined}
+          aria-label={`Room ${exhibit.number}: ${exhibit.title}`}
+          title={exhibit.title}
+        >
+          <span class="exhibition-rail__dot" aria-hidden="true"></span>
+          <span class="exhibition-rail__number">{exhibit.number}</span>
+        </a>
+      </li>
+    ))}
+  </ol>
+  <span class="exhibition-rail__line" aria-hidden="true"></span>
+  <a class="exhibition-rail__bookend" href="/closing" aria-label="Exhibition exit">Exit</a>
+  {currentIndex >= 0 && (
+    <span class="exhibition-rail__status" aria-hidden="true">
+      Room {String(currentIndex + 1).padStart(2, "0")} of {String(exhibits.length).padStart(2, "0")}
+    </span>
+  )}
+</nav>
+
+<style>
+  .exhibition-rail {
+    --rail-ink: var(--ink);
+    --rail-muted: var(--muted);
+    --rail-line: var(--hairline);
+    display: grid;
+    grid-template-columns: auto minmax(1.5rem, 1fr) auto minmax(1.5rem, 1fr) auto;
+    align-items: center;
+    gap: .8rem;
+    width: min(44rem, 100%);
+    color: var(--rail-muted);
+    font-size: .6rem;
+    font-weight: 650;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+  }
+
+  .exhibition-rail--dark {
+    --rail-ink: #f7f5ef;
+    --rail-muted: #aaa7a0;
+    --rail-line: rgba(255,255,255,.18);
+  }
+
+  .exhibition-rail__line {
+    height: 1px;
+    background: var(--rail-line);
+  }
+
+  .exhibition-rail ol {
+    display: flex;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+    gap: clamp(.55rem, 1.6vw, 1rem);
+    list-style: none;
+  }
+
+  .exhibition-rail__bookend,
+  .exhibition-rail__room {
+    color: inherit;
+    text-decoration: none;
+    transition: color var(--motion-fast) var(--ease-out);
+  }
+
+  .exhibition-rail__bookend:hover,
+  .exhibition-rail__room:hover,
+  .exhibition-rail__room.is-current {
+    color: var(--rail-ink);
+  }
+
+  .exhibition-rail__room {
+    display: inline-grid;
+    min-width: 2.2rem;
+    min-height: 2.2rem;
+    place-items: center;
+    gap: .2rem;
+  }
+
+  .exhibition-rail__dot {
+    width: .3rem;
+    height: .3rem;
+    border: 1px solid currentColor;
+    border-radius: 50%;
+    background: transparent;
+    transition: transform var(--motion-fast) var(--ease-out), background-color var(--motion-fast) var(--ease-out);
+  }
+
+  .exhibition-rail__room:hover .exhibition-rail__dot {
+    transform: scale(1.45);
+  }
+
+  .exhibition-rail__room.is-current .exhibition-rail__dot {
+    background: currentColor;
+    transform: scale(1.45);
+  }
+
+  .exhibition-rail__number { line-height: 1; }
+  .exhibition-rail__status { display: none; }
+
+  @media (max-width: 680px) {
+    .exhibition-rail {
+      grid-template-columns: auto 1fr auto;
+      gap: .7rem;
+      font-size: .56rem;
+    }
+
+    .exhibition-rail > .exhibition-rail__line,
+    .exhibition-rail__bookend { display: none; }
+
+    .exhibition-rail ol {
+      grid-column: 1 / -1;
+      justify-content: space-between;
+      gap: .25rem;
+    }
+
+    .exhibition-rail__room {
+      min-width: 2.75rem;
+      min-height: 2.75rem;
+    }
+
+    .exhibition-rail__status {
+      display: block;
+      grid-column: 1 / -1;
+      text-align: center;
+    }
+  }
+</style>
