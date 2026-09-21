@@ -27,15 +27,19 @@ for (const viewport of [
         await Promise.all(
           images.map(async (node) => {
             const image = node as HTMLImageElement;
+            image.loading = "eager";
 
             if (!image.complete) {
-              await new Promise<void>((resolve) => {
-                image.addEventListener("load", () => resolve(), { once: true });
-                image.addEventListener("error", () => resolve(), { once: true });
-              });
+              await Promise.race([
+                new Promise<void>((resolve) => {
+                  image.addEventListener("load", () => resolve(), { once: true });
+                  image.addEventListener("error", () => resolve(), { once: true });
+                }),
+                new Promise<void>((resolve) => setTimeout(resolve, 5000))
+              ]);
             }
 
-            if (typeof image.decode === "function") {
+            if (image.complete && typeof image.decode === "function") {
               await image.decode().catch(() => undefined);
             }
           })
