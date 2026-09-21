@@ -72,6 +72,68 @@ test("all museum artwork images decode successfully", async ({ page }) => {
   }
 });
 
+test("static artwork sources preserve the supplied full-resolution dimensions", async ({ page }) => {
+  const expected = [
+    {
+      path: "/work/desmos-flower",
+      src: "/artworks/desmos-flower.jpg",
+      width: 1194,
+      height: 1207
+    },
+    {
+      path: "/work/geometric-portrait",
+      src: "/artworks/geometric-portrait.jpg",
+      width: 2048,
+      height: 2518
+    },
+    {
+      path: "/work/perspective-study",
+      src: "/artworks/perspective-city.jpg",
+      width: 3166,
+      height: 2048
+    }
+  ];
+
+  for (const artwork of expected) {
+    await page.goto(artwork.path);
+    const image = page.locator(".work__frame img");
+    await expect(image).toHaveAttribute("src", artwork.src);
+
+    const dimensions = await image.evaluate(async (node) => {
+      const element = node as HTMLImageElement;
+      if (typeof element.decode === "function") {
+        await element.decode();
+      }
+
+      return {
+        width: element.naturalWidth,
+        height: element.naturalHeight
+      };
+    });
+
+    expect(dimensions.width, `${artwork.src} width`).toBe(artwork.width);
+    expect(dimensions.height, `${artwork.src} height`).toBe(artwork.height);
+  }
+
+  await page.goto("/work/desmos-flower");
+  const processImage = page.locator(".process__figure img");
+  await expect(processImage).toHaveAttribute("src", "/artworks/desmos-flower-process.jpg");
+  const processDimensions = await processImage.evaluate(async (node) => {
+    const element = node as HTMLImageElement;
+    if (typeof element.decode === "function") {
+      await element.decode();
+    }
+
+    return {
+      width: element.naturalWidth,
+      height: element.naturalHeight
+    };
+  });
+
+  expect(processDimensions.width).toBe(719);
+  expect(processDimensions.height).toBe(996);
+});
+
 test("document chrome contains no escaped newline artifacts", async ({ page }) => {
   for (const path of ["/", "/exhibition", "/work/desmos-flower", "/work/fibonacci-modulo-25", "/about", "/closing"]) {
     await page.goto(path);
