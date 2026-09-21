@@ -28,7 +28,7 @@ const total = String(exhibits.length).padStart(2, "0");
   preloadImage={next?.image}
 >
   <div
-    class="work-shell"
+    class:list={["work-shell", exhibit.kind === "interactive" && "work-shell--digital"]}
     data-work
   >
     <SiteHeader current="exhibition" />
