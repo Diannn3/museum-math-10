@@ -39,6 +39,14 @@ test("interactive work never autoplays audio inside the museum", async ({ page }
   await expect(page.locator("audio, video")).toHaveCount(0);
 });
 
+test("document chrome contains no escaped newline artifacts", async ({ page }) => {
+  for (const path of ["/", "/exhibition", "/work/desmos-flower", "/work/fibonacci-modulo-25", "/about", "/closing"]) {
+    await page.goto(path);
+    const visibleText = await page.locator("body").innerText();
+    expect(visibleText, `${path} should not render an escaped newline token`).not.toContain("\\n");
+  }
+});
+
 for (const viewport of [
   { width: 320, height: 700 },
   { width: 390, height: 844 },
