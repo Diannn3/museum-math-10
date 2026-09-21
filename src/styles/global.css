@@ -262,7 +262,7 @@ button:focus-visible {
 }
 
 .motion-ready [data-reveal="label"] {
-  transform: translateX(1rem);
+  transform: translateY(1rem);
 }
 
 .motion-ready [data-reveal].is-visible {
