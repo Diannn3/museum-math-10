@@ -1,0 +1,174 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import SiteHeader from "../../components/SiteHeader.astro";
+import { exhibits, getExhibitNeighbors, type Exhibit } from "../../data/exhibits";
+import "../../styles/gallery.css";
+
+export function getStaticPaths() {
+  return exhibits.map((exhibit) => ({
+    params: { slug: exhibit.slug },
+    props: { exhibit }
+  }));
+}
+
+interface Props {
+  exhibit: Exhibit;
+}
+
+const { exhibit } = Astro.props;
+const { previous, next } = getExhibitNeighbors(exhibit.slug);
+const total = String(exhibits.length).padStart(2, "0");
+---
+
+<BaseLayout
+  title={`${exhibit.title} — MATH × ART`}
+  description={exhibit.summary}
+>
+  <div
+    class:list={["work-shell", exhibit.kind === "interactive" && "work-shell--interactive"]}
+    data-work
+  >
+    <SiteHeader current="exhibition" tone={exhibit.kind === "interactive" ? "dark" : "light"} />
+
+    <main id="main-content" class="work">
+      <div class="work__navigation work__navigation--previous">
+        {previous ? (
+          <a
+            href={`/work/${previous.slug}`}
+            class="work-nav"
+            rel="prev"
+            data-nav="previous"
+            aria-label={`Previous work: ${previous.title}`}
+          >
+            <span class="work-nav__arrow" aria-hidden="true">←</span>
+            <span>Previous</span>
+          </a>
+        ) : (
+          <span class="work-nav work-nav--disabled" aria-hidden="true">
+            <span class="work-nav__arrow">←</span>
+            <span>Previous</span>
+          </span>
+        )}
+      </div>
+
+      <figure class="work__art">
+        <div class="work__frame">
+          <img
+            src={exhibit.image}
+            alt={exhibit.alt}
+            decoding="async"
+            fetchpriority="high"
+          />
+        </div>
+      </figure>
+
+      <article class="work__label" aria-labelledby="work-title">
+        <p class="work__count">{exhibit.number} / {total}</p>
+        <h1 id="work-title">{exhibit.title}</h1>
+        <p class="work__subtitle">{exhibit.subtitle}</p>
+        <div class="work__rule" aria-hidden="true"></div>
+
+        <p class="work__summary">{exhibit.summary}</p>
+
+        <dl class="work__facts">
+          <div>
+            <dt>Artist</dt>
+            <dd>{exhibit.artist}</dd>
+          </div>
+          <div>
+            <dt>Medium</dt>
+            <dd>{exhibit.medium}</dd>
+          </div>
+        </dl>
+
+        {exhibit.kind === "interactive" && (
+          <p class="work__interactive-note">
+            This piece continues beyond the museum as an interactive audiovisual work.
+          </p>
+        )}
+      </article>
+
+      <div class="work__navigation work__navigation--next">
+        {next ? (
+          <a
+            href={`/work/${next.slug}`}
+            class="work-nav"
+            rel="next"
+            data-nav="next"
+            aria-label={`Next work: ${next.title}`}
+          >
+            <span class="work-nav__arrow" aria-hidden="true">→</span>
+            <span>Next</span>
+          </a>
+        ) : (
+          <a
+            href="/exhibition"
+            class="work-nav"
+            data-nav="next"
+            aria-label="Return to exhibition overview"
+          >
+            <span class="work-nav__arrow" aria-hidden="true">↗</span>
+            <span>Overview</span>
+          </a>
+        )}
+      </div>
+    </main>
+
+    {exhibit.processImage && (
+      <aside class="process" aria-labelledby="process-title">
+        <div class="process__copy">
+          <p class="eyebrow">Behind the work</p>
+          <h2 id="process-title">The construction is part of the artwork.</h2>
+          <p>
+            The graphing view exposes a portion of the mathematical process used to
+            build the final flower. It is shown as supporting material rather than as
+            a second exhibit.
+          </p>
+        </div>
+        <figure class="process__figure">
+          <img src={exhibit.processImage} alt={exhibit.processAlt ?? ""} loading="lazy" decoding="async" />
+        </figure>
+      </aside>
+    )}
+
+    <footer class="work-footer">
+      <a href="/exhibition">View all works</a>
+      <span>Use ← and → to move through the gallery</span>
+    </footer>
+  </div>
+
+  <script is:inline>
+    (() => {
+      const shell = document.querySelector("[data-work]");
+      if (!shell) return;
+
+      document.addEventListener("keydown", (event) => {
+        const target = event.target;
+        if (
+          target instanceof HTMLElement &&
+          (target.tagName === "INPUT" ||
+            target.tagName === "TEXTAREA" ||
+            target.tagName === "SELECT" ||
+            target.isContentEditable)
+        ) {
+          return;
+        }
+
+        const direction =
+          event.key === "ArrowLeft"
+            ? "previous"
+            : event.key === "ArrowRight"
+              ? "next"
+              : null;
+
+        if (!direction) return;
+
+        const link = shell.querySelector(`[data-nav="${direction}"]`);
+        if (link instanceof HTMLAnchorElement) {
+          event.preventDefault();
+          window.location.assign(link.href);
+        }
+      });
+    })();
+  </script>
+</BaseLayout>
