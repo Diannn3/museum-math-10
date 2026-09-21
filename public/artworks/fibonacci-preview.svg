@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1030" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1030" viewBox="0 0 1600 1030" role="img" aria-labelledby="title desc">
 <title id="title">Fibonacci modulo 25 light visualizer preview</title>
 <desc id="desc">A light monochrome Fibonacci modulo 25 visualization with 25 points on a circle, connecting paths, an active black point, a subtle Aedrian Ponce signature field, and playback status.</desc>
 <rect width="1600" height="1030" fill="#fbfbfa"/>
